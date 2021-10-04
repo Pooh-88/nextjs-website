@@ -1,5 +1,5 @@
 // -- Prismic Repo Name
-export const repoName = 'prevuid-sample-site'
+export const repoName = 'your-repo-name'
 
 // -- Prismic API endpoint
 // Determines which repository to query and fetch data from
