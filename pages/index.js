@@ -1,11 +1,20 @@
 import React from 'react'
 
+// Project components
 import DefaultLayout from 'layouts'
 import { Header, HomeBanner, SliceZone } from 'components'
 
+// Project functions & styles
 import { Client } from 'utils/prismicHelpers'
+import useUpdatePreviewRef from 'utils/useUpdatePreviewRef'
 
-const HomePage = ({ doc, menu }) => {
+/**
+ * Homepage component
+ */
+const HomePage = ({ doc, menu, previewRef }) => {
+
+  useUpdatePreviewRef(previewRef, doc.id)
+
   if (doc && doc.data) {
     return (
       <DefaultLayout>
@@ -22,20 +31,19 @@ const HomePage = ({ doc, menu }) => {
   return null
 }
 
-export async function getStaticProps({ preview = null, previewData = {} }) {
+export async function getStaticProps({ previewData }) {
 
-  const { ref } = previewData
+  const previewRef = previewData ? previewData.ref : null
+  const refOption = previewRef ? { ref: previewRef } : null
 
-  const client = Client()
-
-  const doc = await client.getSingle('homepage', ref ? { ref } : null) || {}
-  const menu = await client.getSingle('menu', ref ? { ref } : null) || {}
+  const doc = await Client().getSingle('homepage', refOption) || {}
+  const menu = await Client().getSingle('menu', refOption) || {}
 
   return {
     props: {
       doc,
       menu,
-      preview
+      previewRef
     }
   }
 }

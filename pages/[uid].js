@@ -1,13 +1,21 @@
 import React from 'react'
 
+// Project components
 import DefaultLayout from 'layouts'
 import { Header, SliceZone } from 'components'
 
+// Project functions & styles
 import { queryRepeatableDocuments } from 'utils/queries'
-
+import useUpdatePreviewRef from 'utils/useUpdatePreviewRef';
 import { Client } from 'utils/prismicHelpers'
 
-const Page = ({ doc, menu }) => {
+/**
+ * Page component
+ */
+const Page = ({ doc, menu, previewRef }) => {
+
+  useUpdatePreviewRef(previewRef, doc.id)
+
   if (doc && doc.data) {
     return (
       <DefaultLayout>
@@ -24,17 +32,16 @@ const Page = ({ doc, menu }) => {
 }
 
 
-export async function getStaticProps({ params, preview = null, previewData = {} }) {
-  const { ref } = previewData
+export async function getStaticProps({ params, previewData }) {
+  const previewRef = previewData ? previewData.ref : null
+  const refOption = previewRef ? { ref: previewRef } : null
 
-  const client = Client()
-
-  const doc = await client.getByUID('page', params.uid, ref ? { ref } : null) || {}
-  const menu = await client.getSingle('menu', ref ? { ref } : null) || {}
+  const doc = await Client().getByUID('page', params.uid, refOption) || {}
+  const menu = await Client().getSingle('menu', refOption) || {}
   
   return {
     props: {
-      preview,
+      previewRef,
       menu,
       doc
     }

@@ -2,7 +2,7 @@ import React from 'react'
 import { RichText } from 'prismic-reactjs'
 
 import { DocLink } from 'components'
-import { linkResolver } from 'prismic-configuration'
+import { linkResolver } from 'prismicConfiguration'
 import { imageHighlightStyles } from 'styles'
 
 const ImageHighlight = ({ slice }) => (

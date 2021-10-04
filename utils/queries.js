@@ -16,8 +16,3 @@ export const queryRepeatableDocuments = async (filter) => {
   const allRoutes = await fetchDocs()
   return allRoutes.filter(filter)
 }
-
-export const homePageQuery = async () => {
-  const allRoutes = await fetchDocs()
-  return allRoutes.filter(doc => doc.type === 'post').slice(0, 5)
-}

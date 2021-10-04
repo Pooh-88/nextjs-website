@@ -1,6 +1,12 @@
-export default async (_, res) => {
-  res.clearPreviewData();
+const url = require('url')
 
-  res.writeHead(307, { Location: "/" });
-  res.end();
-};
+export default async function exit(req, res) {
+  // Exit the current user from "Preview Mode". This function accepts no args.
+  res.clearPreviewData()
+
+  const queryObject = url.parse(req.url, true).query
+  const redirectUrl = queryObject && queryObject.currentUrl ? queryObject.currentUrl : '/'
+
+  res.writeHead(307, { Location: redirectUrl })
+  res.end()
+}

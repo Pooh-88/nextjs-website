@@ -2,7 +2,7 @@ import React from 'react'
 import { default as NextLink } from 'next/link'
 import { Link } from 'prismic-reactjs'
 
-import { linkResolver, hrefResolver } from 'prismic-configuration'
+import { linkResolver, hrefResolver } from 'prismicConfiguration'
 
 // Main DocLink component function for generating links to other pages on this site
 const DocLink = ({ children, link, linkClass }) => {
